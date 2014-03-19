@@ -1,0 +1,34 @@
+<form ng-submit="saveInfos()" class="reduce-block-six twelve cell" workflow="scrapbook.create">
+	<div class="row">
+		<div class="three cell height-three">
+			<div class="absolute clip" loading-panel="loading-icon">
+				<img skin-src="/img/illustrations/scrapbook-default.png" ng-if="scrapbook.icon === undefined" class="file-selector" for="icon" />
+				<img ng-src="[[scrapbook.icon]]" ng-if="scrapbook.icon !== undefined" class="file-selector" for="icon" />
+			</div>
+		</div>
+		<div class="eight cell horizontal-spacing-twice">
+			<input type="text" class="twelve cell" required translate attr="placeholder"
+				   placeholder="scrapbook.placeholder.title"
+				   ng-model="scrapbook.title" />
+			<input type="text" class="twelve cell" translate attr="placeholder"
+				   placeholder="scrapbook.placeholder.subtitle"
+				   ng-model="scrapbook.subTitle" />
+			<files-picker
+					ng-model="scrapbook.image" translate attr="value"
+					value="setImage"
+					class="small button"
+					ng-change="setIcon()" id="icon">
+			</files-picker>
+			<input type="button" class="small button" translate attr="value" value="unsetImage" ng-click="removeIcon()"></button>
+
+		</div>
+	</div>
+
+	<div class="cell bottom-locked twelve reduce-block-six">
+		<input type="submit" value="save" class="right-magnet" translate attr="value" />
+		<input type="button" class="cancel right-magnet" ng-click="closeInfos()" value="cancel" translate attr="value" />
+	</div>
+
+	<div class="row"></div>
+</form>
+<div class="row"></div>

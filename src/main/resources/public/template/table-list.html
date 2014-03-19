@@ -1,0 +1,28 @@
+<table class="twelve">
+	<thead>
+	<tr>
+		<th>
+			<input type="checkbox" ng-model="select.all" ng-change="switchAll()" />
+		</th>
+		<th></th>
+		<th translate content="title"></th>
+		<th translate content="from"></th>
+		<th translate content="date"></th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr ng-repeat="scrapbook in scrapbooks.all" ng-class="{ checked: scrapbook.selected }">
+		<td class="action-cell"><input type="checkbox" ng-model="scrapbook.selected" /></td>
+		<td class="action-cell">
+			<div class="twelve cell">
+				<img class="twelve" skin-src="/img/illustrations/scrapbook-default.png" ng-if="scrapbook.icon === undefined && scrapbook.loaded" />
+				<img class="twelve" ng-src="[[scrapbook.icon]]?thumbnail=20x20" ng-if="scrapbook.icon !== undefined" />
+				<i ng-if="scrapbook.shared.length > 0 && currentFolder.name !== 'trash'" role="shared"></i>
+			</div>
+		</td>
+		<td><a ng-click="openScrapbook(scrapbook)">[[scrapbook.title]]</a></td>
+		<td><a href="/userbook/annuaire#[[scrapbook.owner]]">[[scrapbook.ownerName]]</a></td>
+		<td>[[longDate(scrapbook.modified)]]</td>
+	</tr>
+	</tbody>
+</table>

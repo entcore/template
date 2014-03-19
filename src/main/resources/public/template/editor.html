@@ -1,0 +1,72 @@
+<nav class="scrapbook-buttons row" ng-if="scrapbook.pageIndex > 0">
+	<div class="toolbar">
+		<p class="cell" translate key="scrapbook.addContent"></p>
+		<input type="button" ng-click="addTextLayer()" class="text" tooltip="scrapbook.addText" />
+		<files-picker ng-model="media.images" ng-change="addImageLayer()" class="image" tooltip="scrapbook.addImage"></files-picker>
+		<files-picker ng-model="media.musics" ng-change="addAudioLayer()" class="sound" tooltip="scrapbook.addSound"></files-picker>
+		<input type="button" ng-click="openVideoDialog()" class="video" tooltip="scrapbook.addVideo" />
+	</div>
+
+	<div class="scrapbook-pagination right-magnet cell">
+		<input type="text" ng-model="scrapbook.pageIndex" ng-change="goToIndex()"/> / [[scrapbook.pages.length() - 1]]
+	</div>
+	<a class="right-magnet cell horizontal-spacing" ng-click="removePage()" translate content="scrapbook.pages.remove"></a>
+	<a class="right-magnet cell horizontal-spacing" ng-click="duplicatePage()" translate content="scrapbook.pages.duplicate"></a>
+	<a class="right-magnet cell horizontal-spacing" ng-click="newPage()" translate content="scrapbook.pages.add"></a>
+</nav>
+<nav class="scrapbook-buttons row" ng-if="scrapbook.pageIndex === 0">
+	<div class="scrapbook-pagination right-magnet cell">
+		<input type="text" ng-model="scrapbook.pageIndex" ng-change="goToIndex()"/> / [[scrapbook.pages.length() - 1]]
+	</div>
+	<a class="right-magnet cell horizontal-spacing-twice" ng-click="newPage()" translate content="scrapbook.pages.add"></a>
+</nav>
+<section class="scrapbook" ng-class="{ cover: scrapbook.pageIndex === 0 }">
+	<div class="flip-left" ng-click="previousPage()">
+		<div class="left-arrow" ng-class="{ disabled: scrapbook.pageIndex < 1 }"></div>
+	</div>
+	<div class="flip-right" ng-click="createOrGetNextPage()">
+		<div class="right-arrow"></div>
+	</div>
+	<div class="cover" ng-if="scrapbook.pageIndex === 0" ng-class="{ disabled: scrapbook.pageIndex < scrapbook.pages.length }">
+		<h1>[[scrapbook.title]]</h1>
+		<h2>[[scrapbook.subTitle]]</h2>
+		<img ng-src="[[scrapbook.icon]]" />
+	</div>
+	<div class="drawing-zone">
+		<div ng-repeat="layer in layers.all">
+			<placed-block draggable resizable class="clip media adaptable" ng-if="layer.media.type === 'text'"
+						  x="layer.x" y="layer.y" w="layer.w" h="layer.h" z="layer.z">
+				<i role="close" ng-click="removeLayer(layer)"></i>
+				<text-editor ng-model="layer.media.src"></text-editor>
+			</placed-block>
+			<placed-block draggable resizable class="clip media adaptable" ng-if="layer.media.type === 'video'"
+						  x="layer.x" y="layer.y" w="layer.w" h="layer.h" z="layer.z">
+				<i role="close" ng-click="removeLayer(layer)"></i>
+				<div bind-html-unsafe="layer.media.src"></div>
+				<div class="absolute"></div>
+			</placed-block>
+			<placed-block draggable resizable class="media" ng-if="layer.media.type === 'image'"
+						  x="layer.x" y="layer.y" w="layer.w" h="layer.h" z="layer.z">
+				<i role="close" ng-click="removeLayer(layer)"></i>
+				<div loading-panel="scrapbook-[[layer.id]]" ng-if="!layer.media.src"></div>
+				<img class="cell" ng-src="[[layer.media.src]]" ng-if="layer.media.src" ng-class="{ extensible: layer.w }" />
+			</placed-block>
+			<placed-block class="reduce-block-six media" draggable ng-if="layer.media.type === 'audio'"
+						  x="layer.x" y="layer.y" w="layer.w" h="layer.h" z="layer.z" loading-panel="scrapbook-[[layer.id]]">
+				<i role="close" ng-click="removeLayer(layer)"></i>
+				<div loading-panel="scrapbook-[[layer.id]]">
+					<audio ng-src="[[layer.media.src]]" controls ng-if="layer.media.src" />
+				</div>
+			</placed-block>
+		</div>
+	</div>
+</section>
+<div class="row">
+	<a class="cell bottom-locked" ng-click="editInfos()" translate content="scrapbook.edit.properties"></a>
+	<button class="right-magnet" ng-click="saveScrapbook()" translate content="save"></button>
+	<button class="right-magnet" ng-click="viewScrapbook()" translate content="show"></button>
+	<button class="cancel right-magnet" ng-click="viewScrapbook()" class="right-magnet" translate content="back"></button>
+	<div class="row"></div>
+</div>
+
+

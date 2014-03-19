@@ -1,0 +1,72 @@
+<div class="row" ng-controller="FolderController">
+	<div class="row">
+		<h1 class="four cell" data-reload><a><i role="scrapbook"></i><span translate content="scrapbook.title"></span></a></h1>
+		<nav class="contextual-buttons eight cell">
+			<div class="action-buttons">
+				<button ng-click="newScrapbook()" workflow="scrapbook.create">
+					<i role="add"></i><span translate content="create"></span>
+				</button>
+			</div>
+			<div class="display-buttons">
+				<i role="show-list"
+				   ng-class="{ selected: containsView('list', 'table-list') }"
+				   ng-click="openView('table-list', 'list')"></i>
+				<i role="show-icons"
+				   ng-class="{ selected: containsView('list', 'icons-list') }"
+				   ng-click="openView('icons-list', 'list')"></i>
+			</div>
+		</nav>
+	</div>
+
+	<div class="row">
+		<section class="four cell">
+			<nav class="vertical">
+				<ul>
+					<li workflow="scrapbook.create">
+						<a ng-class="{ selected: currentFolder.name === 'myScrapbooks' }"
+						   ng-click="openMyScrapbooks()" translate content="scrapbook.myScrapbooks">
+						</a>
+					</li>
+					<li workflow="workspace.documents.list">
+						<a ng-class="{ selected: currentFolder.name === 'sharedScrapbooks' }"
+						   ng-click="openSharedScrapbooks()" translate content="scrapbook.sharedScrapbooks">
+						</a>
+					</li>
+					<li workflow="scrapbook.create">
+						<a ng-class="{ selected: currentFolder.name === 'trash' }"
+						   ng-click="openTrash()" translate content="scrapbook.trash">
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</section>
+		<section class="eight cell" workflow="workspace.documents.list">
+			<article ng-include="viewsContainers.list" class="row"></article>
+		</section>
+	</div>
+
+	<section class="toggle-buttons" ng-class="{ hide: scrapbooks.selection().length === 0 }" workflow="workspace.documents.list">
+		<div class="toggle block-container">
+			<div class="row">
+				<behaviour name="edit" resource="scrapbooks.selection()">
+					<button class="cell" ng-click="editInfos()" translate content="edit" ng-if="scrapbooks.selection().length === 1"></button>
+				</behaviour>
+				<behaviour name="moveTrash" resource="scrapbooks.selection()">
+					<button class="cell" ng-click="removeSelection()" translate content="remove"></button>
+				</behaviour>
+				<behaviour name="moveTrash" resource="scrapbooks.selection()">
+					<button class="cell" ng-click="restore()" ng-if="currentFolder.name === 'trash'" translate content="restore"></button>
+				</behaviour>
+				<behaviour name="share" resource="scrapbooks.selection()">
+					<button class="cell" ng-click="share()" ng-if="currentFolder.name === 'myScrapbooks'" translate content="share"></button>
+				</behaviour>
+				<behaviour name="copy" resource="scrapbooks.selection()">
+					<button class="cell" ng-click="copyInMyScrapbooks()" ng-if="currentFolder.name === 'sharedScrapbooks'" translate content="scrapbook.copy"></button>
+				</behaviour>
+			</div>
+		</div>
+	</section>
+</div>
+
+
+

@@ -1,0 +1,11 @@
+{
+	"main" : "fr.wseduc.template.Template",
+	"port" : 8021,
+	"app-name" : "Template",
+	"app-address" : "/template",
+	"app-icon" : "template-large",
+	"mode": "dev",
+	"integration-mode" : "HTTP",
+	"app-registry.port" : 8012,
+	"entcore.port" : 8009
+}

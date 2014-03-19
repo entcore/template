@@ -1,0 +1,19 @@
+<header>&nbsp;</header>
+<div class="icons-view">
+	<div ng-repeat="scrapbook in scrapbooks.all" class="element reduce-block-six">
+		<div class="img-container" ng-click="openScrapbook(scrapbook)">
+			<div>
+				<img class="twelve" skin-src="/img/illustrations/scrapbook-default.png" ng-if="scrapbook.icon === undefined && scrapbook.loaded" />
+				<img class="twelve" ng-src="[[scrapbook.icon]]?thumbnail=120x120" ng-if="scrapbook.icon !== undefined" />
+			</div>
+
+		</div>
+		<input type="checkbox" ng-model="scrapbook.selected" />
+		<a ng-click="openScrapbook(scrapbook)" class="medium-text">
+			<i ng-if="scrapbook.shared.length > 0 && currentFolder.name !== 'trash'" role="shared" class="inline"></i>
+			[[scrapbook.title]]
+		</a>
+		<a href="/userbook/annuaire#[[scrapbook.owner]]"><strong class="small-text">[[scrapbook.ownerName]]</strong></a>
+	</div>
+	<div class="clear"></div>
+</div>
